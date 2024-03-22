@@ -1,0 +1,68 @@
+import java.util.Scanner; // imports user input
+
+public class VendingMachine {
+
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in); //activates user input
+
+        // define products by name, price, quantity
+        String[] products = {"Cola", "Chips", "Candy"}; //product names//
+        int[] prices = {100, 75, 50}; //product price//
+        int[] quantities = {5, 3, 2}; //product quantities//
+
+        int insertedMoney = 0; //default value
+        int selection;
+
+        do {
+            System.out.println("\nWelcome to the Vending Machine!"); //greeting message//
+            System.out.println("Available Products:");
+            
+            //display the list of products and respective price and quantities//
+            for (int i = 0; i < products.length; i++) {
+                if (quantities[i] > 0) {
+                    System.out.println((i + 1) + ". " + products[i] + " - $" + prices[i] + " (" + quantities[i] + " left)"); 
+                } else {
+                    System.out.println((i + 1) + ". " + products[i] + " (Sold Out)");
+                }
+            }
+            System.out.println("Enter money (in cents): ");
+            insertedMoney = scan.nextInt(); //user inputs money value//
+
+            displayMenu(insertedMoney);
+
+            System.out.println("Enter your selection (0 to exit): ");
+            selection = scan.nextInt(); //user selects product//
+
+            if (selection > 0 && selection <= products.length) {
+                processSelection(selection, insertedMoney, prices, quantities);
+            } else if (selection != 0) {
+                System.out.println("Invalid selection. Please try again."); //message for invalid selection to user//
+            }
+
+        } while (selection != 0);
+
+        scanner.close();
+        System.out.println("Thank you for using the Vending Machine!"); //message for exiting the program to user//
+    }
+
+    public static void displayMenu(int insertedMoney) {
+        System.out.println("\nYour current balance: $" + (double) insertedMoney / 100); //message of notifying user balance to user//
+    }
+
+    // algorithm for computing payment and product transaction //
+    public static void processSelection(int selection, int insertedMoney, int[] prices, int[] quantities) {
+        int price = prices[selection - 1];
+        if (quantities[selection - 1] > 0 && insertedMoney >= price) {
+            quantities[selection - 1]--;
+            System.out.println("Dispensing " + products[selection - 1] + ". Enjoy!"); //message for complete transaction to user//
+            int change = insertedMoney - price;
+            if (change > 0) {
+                System.out.println("Your change: $" + (double) change / 100); //message for remaining change to user//
+            }
+        } else if (quantities[selection - 1] == 0) {
+            System.out.println("Sorry, " + products[selection - 1] + " is sold out."); //message for product out of stock to user//
+        } else {
+            System.out.println("Insufficient funds. Please insert more money."); //message for insufficient funds to user//
+        }
+    }
+}
