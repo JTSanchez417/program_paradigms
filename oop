@@ -1,0 +1,108 @@
+import java.util.ArrayList;
+import java.util.List;
+
+public class Library {
+
+    private List<Book> books;
+
+    public Library() {
+        this.books = new ArrayList<>();
+    }
+
+    public void addBook(Book book) {
+        this.books.add(book);
+    }
+
+    public List<Book> listBooks() {
+        return new ArrayList<>(this.books); // Return a copy to avoid modifying original list
+    }
+
+    public List<Book> searchBooksByTitle(String title) {
+        List<Book> results = new ArrayList<>();
+        for (Book book : this.books) {
+            if (book.getTitle().toLowerCase().contains(title.toLowerCase())) {
+                results.add(book);
+            }
+        }
+        return results;
+    }
+
+    public List<Book> searchBooksByAuthor(String author) {
+        List<Book> results = new ArrayList<>();
+        for (Book book : this.books) {
+            if (book.getAuthor().toLowerCase().contains(author.toLowerCase())) {
+                results.add(book);
+        }
+        }
+        return results;
+    }
+}
+
+class Book {
+    private String title;
+    private String author;
+    private String genre;
+
+    public Book(String title, String author, String genre) {
+        this.title = title;
+        this.author = author;
+        this.genre = genre;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    @Override
+    public String toString() {
+        return "Title: " + title + ", Author: " + author + ", Genre: " + genre;
+    }
+}
+
+public class Main {
+
+    public static void main(String[] args) {
+        Library library = new Library();
+
+        // Add some books
+        library.addBook(new Book("The Lord of the Rings", "J.R.R. Tolkien", "Fantasy"));
+        library.addBook(new Book("Pride and Prejudice", "Jane Austen", "Romance"));
+        library.addBook(new Book("To Kill a Mockingbird", "Harper Lee", "Fiction"));
+
+        // List all books
+        System.out.println("All Books:");
+        for (Book book : library.listBooks()) {
+            System.out.println(book);
+        }
+
+        // Search books by title
+        System.out.println("\nSearch by Title (Lord):");
+        List<Book> searchResult = library.searchBooksByTitle("Lord");
+        if (searchResult.isEmpty()) {
+            System.out.println("No books found.");
+        } else {
+            for (Book book : searchResult) {
+                System.out.println(book);
+            }
+        }
+
+        // Search books by author (Austen)
+        System.out.println("\nSearch by Author (Austen):");
+        searchResult = library.searchBooksByAuthor("Austen");
+        if (searchResult.isEmpty()) {
+            System.out.println("No books found.");
+        } else {
+            for (Book book : searchResult) {
+                System.out.println(book);
+            }
+        }
+    }
+}
