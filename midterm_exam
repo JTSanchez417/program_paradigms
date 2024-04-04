@@ -1,0 +1,75 @@
+//HTML
+
+<!DOCTYPE html>
+<html lang="en"> //language
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form</title> //title of the webpage
+</head>
+<body>
+    //format or display of login form for user to see
+    <h1>Login</h1>
+    <form id="loginForm">
+        <div class="form-group">
+            <label for="username">Username or Email</label>
+            <input type="text" id="username" name="username" required> //for user input
+            <span id="usernameError" class="error"></span>
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required> //for user input
+            <span id="passwordError" class="error"></span>
+        </div>
+        <button type="submit">Login</button> //button for login
+    </form>
+    <script src="script.js"></script> //connect for jscript
+</body>
+</html>
+
+
+//JavaScript (script.js)
+
+const usernameInput = document.getElementById('username'); //gets element of variable 'username'
+const passwordInput = document.getElementById('password'); //gets element of id 'password'
+const usernameError = document.getElementById('usernameError'); //gets element of id 'username'
+const passwordError = document.getElementById('passwordError'); //gets element of id 'username'
+const loginForm = document.getElementById('loginForm'); //login form
+
+loginForm.addEventListener('submit', (event) => {
+  event.preventDefault(); //prevent default form submission
+
+  let username = usernameInput.value.trim();
+  let password = passwordInput.value;
+
+  //error messages when reset
+  usernameError.textContent = "";
+  passwordError.textContent = "";
+
+  //username validation
+  if (!validateUsername(username)) {
+    usernameError.textContent = "Invalid username or email.";
+    return; //stops execution if username is invalid
+  }
+
+  //password validation
+  if (!validatePassword(password)) {
+    passwordError.textContent = "Password must be at least 6 characters and contain a mix of uppercase, lowercase, numbers, and special characters.";
+    return; //stop execution if password is invalid
+  }
+
+  //simulate successful login
+  console.log("Login successful! Redirecting to homepage...");
+  //redirect to homepage
+  //w  indow.location.href = "homepage.html";
+});
+
+function validateUsername(username) {
+  // You can customize username validation here (e.g., email format, minimum length)
+  return username.length >= 6; //sets range for minimum password length
+}
+
+function validatePassword(password) {
+  const regex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)/; //allows uppercase and lowercase letters, as well as numbers for user to input their password
+  return password.length >= 6 && regex.test(password);
+}
