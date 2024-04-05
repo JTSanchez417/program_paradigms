@@ -1,0 +1,91 @@
+import java.util.ArrayList; //imports array for list of grades//
+import java.util.Scanner; //imports Scanner for user input
+
+public class StudentGradeAnalyzer { //class for Student Grades Analyzer system//
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in); //implements user input//
+        ArrayList<Integer> grades = getGradesFromUser(scanner); //array for grades to be inputted by the user//
+
+        double averageGrade = calculateAverageGrade(grades); //variable for average grade//
+        int highestGrade = findHighestGrade(grades); //variable for highest grade//
+        int lowestGrade = findLowestGrade(grades); //variable for lowest grade//
+        int studentsAboveThreshold = countAboveThreshold(grades, 80); //set threshold here//
+
+        //display of results to user//
+        System.out.println("Average Grade: " + averageGrade);
+        System.out.println("Highest Grade: " + highestGrade);
+        System.out.println("Lowest Grade: " + lowestGrade);
+        System.out.println("Number of Students Above 80: " + studentsAboveThreshold);
+
+        scanner.close();
+    }
+
+    public static ArrayList<Integer> getGradesFromUser(Scanner scanner) { //system for getting grades from user input//
+        ArrayList<Integer> grades = new ArrayList<>();
+        String continueInput;
+
+        do {
+            System.out.print("Enter student grade (or 'q' to quit): ");
+            String gradeInput = scanner.nextLine(); //user inputs grade to array//
+
+            if (gradeInput.equalsIgnoreCase("q")) { //user chooses to stop//
+                break;
+            }
+
+            try {
+                int grade = Integer.parseInt(gradeInput); //range and limit of what grade needs to be inputted//
+                if (grade >= 0 && grade <= 100) {
+                    grades.add(grade);
+                } else {
+                    System.out.println("Invalid grade. Please enter a number between 0 and 100."); //warning message for invalid grade inputted//
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a number."); //user inputs invalid one//
+            }
+
+            System.out.print("Enter another grade (or 'q' to quit)? (y/n): "); //user inputs another grade//
+            continueInput = scanner.nextLine();
+        } while (continueInput.equalsIgnoreCase("y"));
+
+        return grades; //returns value of 'grades'//
+    }
+
+    public static double calculateAverageGrade(ArrayList<Integer> grades) { //algorithm for getting the overall average grade//
+        double sum = 0;
+        for (int grade : grades) {
+            sum += grade;
+        }
+        return sum / grades.size(); //returns result of formula//
+    }
+
+    public static int findHighestGrade(ArrayList<Integer> grades) { // algorithm for finding the highest grade inputted by the user// 
+        int highest = grades.get(0);
+        for (int grade : grades) {
+            if (grade > highest) {
+                highest = grade;
+            }
+        }
+        return highest; //returns value of 'highest'//
+    }
+
+    public static int findLowestGrade(ArrayList<Integer> grades) { // algorithm for finding the lowest grade inputted by the user// 
+        int lowest = grades.get(0);
+        for (int grade : grades) {
+            if (grade < lowest) {
+                lowest = grade;
+            }
+        }
+        return lowest; //returns value of 'lowest'//
+    }
+
+    public static int countAboveThreshold(ArrayList<Integer> grades, int threshold) { // algorithm for the threshold// 
+        int count = 0;
+        for (int grade : grades) {
+            if (grade > threshold) {
+                count++;
+            }
+        }
+        return count; //returns value of 'count'//
+    }
+}
