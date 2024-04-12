@@ -23,7 +23,7 @@ COPYRIGHT & LICENSING INFORMATION:
 Since the code is meant to be for educational or demonstration purposes, no copyright or licensing is specifically mentioned in the code.
 
 KNOWN BUGS/ISSUES:
-Simulated Login: The current code simulates a successful login by logging a message to the console. In a real application, you would likely need to implement server-side authentication to verify credentials and redirect to a protected area upon successful login.
+Simulated Login: The current code simulates a successful login by logging a message to the console. In a real application, you would likely need to implement server-side authentication to verify credentials and redirect to a protected area upon successful login. 
 Basic Validation: The username validation only checks for a minimum length; thus, you might want to consider adding email format validation for usernames/emails. The password complexity requirements could also be further customized based on your security needs.
 
 FIXING COMMON PROBLEMS:
